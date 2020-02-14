@@ -19,7 +19,7 @@ const typeDefs = gql`
         username: String!
         email: String!
         password: String!
-        records: [QuakeEvents]
+        records: [Quake]
     }
 
     type Mutation {
@@ -33,9 +33,9 @@ const typeDefs = gql`
     }
 
     type RecordUpdateResponse {
-        success: Boolean!s
+        success: Boolean!
         messsage: String
-        records: [QuakeEvents]
+        records: [Quake]
     }
 `;
 
