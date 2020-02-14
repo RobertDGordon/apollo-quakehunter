@@ -8,7 +8,7 @@ fetch(url)
         return res.json();
     })
     .then(function (quakedata){
-        console.log(quakedata.features[0]);
+        // console.log(quakedata.features[0]);
 
         const quake = quakedata.features[0];
         const date = new Date(quake.properties.time);
@@ -20,6 +20,8 @@ fetch(url)
         const seconds = date.getSeconds();
         const datestring = `${month} ${day}, ${year} at ${hour}:${minute} and ${seconds} seconds`;
         const timestamp = quake.properties.time
+
+        // console.log(datestring)
 
         function monthName(index) {
             const monthLegend = {
@@ -38,5 +40,15 @@ fetch(url)
             }
             return monthLegend[index];
         };
+
+        const customDate = {
+            magnitude: quake.properties.mag,
+            location: quake.properties.place,
+            when: datestring,
+            time: quake.properties.time,
+            id: quake.id
+        }
+
+        console.log(customDate)
 
     });
