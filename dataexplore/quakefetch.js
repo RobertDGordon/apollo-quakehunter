@@ -10,7 +10,7 @@ fetch(url)
     .then(function (quakedata){
         // console.log(quakedata.features[0]);
 
-        const quake = quakedata.features[0];
+        const quake = quakedata;
         const date = new Date(quake.properties.time);
         const year = date.getFullYear();
         const month = monthName(date.getMonth())
