@@ -28,5 +28,11 @@ module.exports = {
             dataSources.userAPI.getUsers(),
         me: (_, __, { dataSources }) =>
             dataSources.userAPI.findOrCreateUser()
+    },
+    Mutation: {
+        login: async (_, { email }, { dataSources }) => {
+            const user = await dataSources.userAPI.getUser({ email });
+            if (user) return Buffer.from(email).toString('base64');
+        }
     }
 }
