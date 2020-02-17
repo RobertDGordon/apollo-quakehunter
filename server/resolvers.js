@@ -1,5 +1,7 @@
 const { paginateResults } = require('./utils')
 
+const jwt = require('jsonwebtoken');
+
 module.exports = {
     Query: {
         quakes: async (_, { pageSize = 20, after }, { dataSources }) => {
@@ -32,7 +34,13 @@ module.exports = {
     Mutation: {
         login: async (_, { email }, { dataSources }) => {
             const user = await dataSources.userAPI.getUser({ email });
-            if (user) return Buffer.from(email).toString('base64');
+            if (user) {
+                const token = jwt.sign({ id: user.ud, email: user.email }, 'secret', { expiresIn: 60 * 60})
+                return token
+            } 
+            if (!user) {
+                console.log('User not found!')
+            }
         },
         saveRecord: async (_, { recordId }, { dataSources }) => {
             const results = await dataSources.userAPI.saveRecord({ recordId })
