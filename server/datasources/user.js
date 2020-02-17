@@ -16,18 +16,45 @@ class UserAPI extends DataSource {
     }
 
     async getUser({email: emailArg}) {
-        let index = 0;
+        let index = 1;
         const email = this.context && this.context.user ?
             this.context.user.email : emailArg;
         
         const theUser = this.store.users.map(user => {
             if (email === user.email) {
                 index = this.store.users.indexOf(user)
+                console.log('user index:', user.id, index)
                 return user
             }
         })
 
         return theUser[index]
+    }
+    async saveRecord({ recordId }) {
+        const userId = this.context.user.id;
+        // console.log('userId', userId)
+        if(!userId) {
+            console.log('No user on context')
+        } else {
+            console.log('User context:', userId)
+        }
+
+        const usercheck = this.store.users.map(user => {
+            if(userId == user.id) {
+                user.records.push({ id: recordId })
+                return user
+            }
+        })
+
+        let users = [];
+
+        await usercheck.forEach(e => {
+            if(e) {
+                users.push(e)
+            }
+        })
+
+        return users[0].records.length > 4 ? users[0].records : "Record length error"
     }
 }
 

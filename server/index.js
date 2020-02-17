@@ -18,6 +18,7 @@ const server = new ApolloServer({
         // find a user by their email
         const usercheck = await store.users.map(user => {
             if (email === user.email) {
+                // console.log('user: ',user)
                 return user
             }
         });
@@ -26,12 +27,13 @@ const server = new ApolloServer({
 
         await usercheck.forEach(e => {
             if (e) {
+                // console.log('pushing:', e)
                 users.push(e)
             }
         })
 
         const user = users && users[0] || null;
-    
+
         return { user };
       },
     typeDefs,
